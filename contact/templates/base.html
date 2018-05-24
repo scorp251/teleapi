@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('contact.static', filename='css/bootstrap.min.css') }}">
+
+    <title>Pyrogram TG API</title>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                &nbsp;
+            </div>
+            <div class="col-sm">
+            {% block content %}{% endblock %}
+            </div>
+            <div class="col-sm">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{{ url_for('contact.static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('contact.static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('contact.static', filename='js/bootstrap.min.js') }}"></script>
+
+<script language="JavaScript">
+$('#addContactModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var title = button.data('title')
+  var first_name = button.data('first_name') // Extract info from data-* attributes
+  var last_name = button.data('last_name')
+  var phone = button.data('phone')
+  var change = button.data('change')
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text(title)
+  modal.find($('input[name=first_name]')).val(first_name)
+  modal.find($('input[name=last_name]')).val(last_name)
+  modal.find($('input[name=phone_number]')).val(phone)
+  if (change == 1) {
+    modal.find($('input[name=phone_number]')).attr("readonly", true)
+    modal.find($('input[name=contactChange]')).val('1')
+  }
+})
+
+$('#deleteContactModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var userid = button.data('user-id') // Extract info from data-* attributes
+  var userhash = button.data('user-hash')
+  var username = button.data('username')
+  var phone = button.data('userphone')
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-body').text(username + ' (' + phone + ')')
+  modal.find('.modal-footer .userid').val(userid)
+  modal.find('.modal-footer .userhash').val(userhash)
+})
+</script>
+
+{% if errormsg %}
+<script type="text/javascript">
+    $(window).on('load',function(){
+        $('#resultMessageModal').modal('show');
+    });
+</script>
+{% endif %}
+
+  </body>
+</html>

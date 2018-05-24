@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <blockquote class="blockquote text-center">
+    <p class="h2">
+        Список контактов 
+        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addContactModal" data-title="Добавить контакт">Добавить контакт</button>
+    </p>
+    </blockquote>
+    <table class="table table-hover">
+    <tbody>
+    {% for user in contacts %}
+    <tr>
+        <td class="text-center align-middle">
+        {% if user.photo %}
+            <img src="{{ url_for('contact.static', filename='tmp/{}'.format(user.photo)) }}" width=32 height=32 class="rounded-circle">
+        {% endif %}
+        </td>
+        <td class="align-middle">{{ user.first_name }}_{{ user.last_name }}</td>
+        <td class="align-middle">
+        {% if user.bot %}
+            bot
+        {% else %}
+            {{ user.phone }}
+        {% endif %}
+        </td>
+        <th scope="row" class="align-middle">
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContactModal" data-first_name="{{ user.first_name }}" data-last_name="{{ user.last_name }}" data-phone="{{ user.phone }}" data-title="Редактировать контакт" data-change="1">Изменить</button>
+        </th>
+        <td class="text-center align-middle">
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteContactModal" data-user-id="{{ user.id }}" data-user-hash="{{ user.access_hash }}" data-username="{{ user.first_name }}_{{ user.last_name }}" data-userphone="+{{ user.phone }}">Удалить</button>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    {% include 'modal.html' %}
+    {% if errormsg %}
+        {% include 'result_message.html' %}
+    {% endif %}
+{% endblock %}

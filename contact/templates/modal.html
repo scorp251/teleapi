@@ -1,0 +1,63 @@
+<!-- Modal add contact -->
+<div class="modal fade" id="addContactModal" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addContactModalTitle">Добавить контакт</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ url_for('contact.contact_add') }}" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="inputFirstName">Имя:</label>
+            <input type="text" class="form-control" name="first_name" id="inputFirstName" aria-describedby="inputFirstNameHelp" placeholder="Введите имя" required>
+            <small id="inputFirstNameHelp" class="form-text text-muted">Введите имя контакта</small>
+        </div>
+        <div class="form-group">
+            <label for="inputLastName">Фамилия:</label>
+            <input type="text" class="form-control" name="last_name" id="inputLastName" aria-describedby="inputLastNameHelp" placeholder="Введите фамилию" required>
+            <small id="inputLastNameHelp" class="form-text text-muted">Введите фамилию контакта</small>
+        </div>
+        <div class="form-group">
+            <label for="inputPhone">Телефон:</label>
+            <input type="number" class="form-control" name="phone_number" id="inputPhone" aria-describedby="inputPhoneHelp" placeholder="Введите телефон" required
+            <small id="inputPhoneHelp" class="form-text text-muted">Введите номер телеофна контакта</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="contactChange" value="0">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete contact -->
+<div class="modal fade" id="deleteContactModal" tabindex="-1" role="dialog" aria-labelledby="addContactModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteContactModalTitle">Удалить контакт?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ url_for('contact.contact_del') }}" method="POST">
+      <div class="modal-body">
+        Вы действительно хотите удалить пользователя?
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="userid" class="userid" value="">
+        <input type="hidden" name="userhash" class="userhash" value="">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="submit" class="btn btn-danger">Удалить</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
