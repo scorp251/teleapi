@@ -31,5 +31,20 @@ tglog.addHandler(file_handler)
 if config['telethon']['logconsole'] == 'True':
     tglog.addHandler(stream_handler)
 
+msglog = logging.getLogger('tgmessages')
+msglog.setLevel(config['telegram']['loglevel'])
+msglog.propagate = False
+file_handler = RotatingFileHandler(config['telegram']['logfile'], 'a', 1 * 1024 * 1024, 0)
+file_handler.setFormatter(formatter)
+msglog.addHandler(file_handler)
+if config['telegram']['logconsole'] == 'True':
+    msglog.addHandler(stream_handler)
+
 def get_logger():
     return LOG
+
+def get_tglog():
+    return tglog
+
+def get_msglog():
+    return msglog

@@ -2,7 +2,8 @@ from flask import Flask
 from api import telegram
 from contact import contact
 from utils import logger
-from utils.tgclient import client
+#from utils.tgclient import client
+#from utils.tgmessages import eventHandlerCallback
 
 log = logger.get_logger()
 

@@ -106,3 +106,4 @@ venv.bak/
 conf/config.ini
 mainclient.session
 contact/static/tmp
+message.*
