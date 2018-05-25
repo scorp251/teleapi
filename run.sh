@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-gunicorn -b 0.0.0.0:5000 --reload app:app
+cd /opt/teleapi
+
+./.venv/bin/activate
+
+gunicorn -b 127.0.0.1:5000 --reload app:app

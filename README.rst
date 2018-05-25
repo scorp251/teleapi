@@ -23,18 +23,24 @@ Requirements
 Installing
 ----------
 
-.. code:: shell
+.. code-block:: shell
 
+    cd /opt
     git clone https://github.com/scorp251/teleapi
+    cd teleapi
+    virtualenv .venv
+    .venv/bin/activate
+    pip install -r requirements.txt
 
 Getting Started
 ---------------
 
 Copy file config.ini.sample to config.ini and fill requiered fields
 From main directory run 
+
 .. code:: shell
 
-    gunicorn -b 127.0.0.1:5000 --reload app:app
+    ./run.sh
 
 Configure NGINX
 
