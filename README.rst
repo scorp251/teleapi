@@ -38,7 +38,8 @@ From main directory run
 
 Configure NGINX
 
-.. code:: shell
+.. code-block:: shell
+
     server {
         listen 0.0.0.0:80;
 
@@ -50,3 +51,26 @@ Configure NGINX
             root /opt/teleapi/app;
        }
     }
+
+Usage
+---------------
+To access contact list use /contacts url in your web browser
+To send simple message
+
+.. code:: shell
+   
+    curl -XPOST 'http://<your server ip>/api/telegram/send?to=<phone number>&messag=Hello+World'
+
+To send file content as message
+
+.. code:: shell
+
+   curl -XPOST -d @/path/to/file.txt 'http://<your server ip>/api/telegram/send?to=<phone number>'
+
+Note! File may be base64 encoded
+
+To send JSON
+
+.. code:: shell
+
+     curl -H 'Content-Type: application/json' -XPOST -d '{ "to": "<phone number>", "message": "Hello world"}' 'http://<your server ip>/api/telegram/sendJSON'
