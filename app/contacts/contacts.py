@@ -1,4 +1,6 @@
+import os
 from telethon.tl.functions.contacts import GetContactsRequest, ImportContactsRequest, DeleteContactRequest
+from telethon.tl.functions.users import GetUsersRequest
 from telethon.tl.types import InputPhoneContact, InputUser
 from pathlib import Path
 from flask import Blueprint, redirect, render_template, url_for, request, session
@@ -32,7 +34,7 @@ def contact_list():
         if user.photo:
             filename = 'app/contacts/static/tmp/{}.jpg'.format(user.photo.photo_id)
             if not Path(filename).is_file():
-                log.info('Downloading profile photo to {}'.format(filename))
+                log.info('Downloading profile photo {}_{} to {}'.format(user.first_name, user.last_name, filename))
                 client.download_profile_photo(user, file=filename)
             user_profile['photo'] = '{}.jpg'.format(user.photo.photo_id)
         users.append(user_profile)
@@ -74,8 +76,17 @@ def contact_del():
     log.debug('{}'.format(request.form))
 
     input_user = InputUser(int(request.form['userid']), 0)
-    log.debug('{}'.format(input_user))
+
     try:
+        user = client(GetUsersRequest([input_user]))
+        log.debug('{}'.format(user))
+
+        if user[0].photo:
+            filename = 'app/contacts/static/tmp/{}.jpg'.format(user[0].photo.photo_id)
+            if Path(filename).is_file():
+                log.info('Removing profile photo {}_{} to {}'.format(user[0].first_name, user[0].last_name, filename))
+                os.remove(filename)
+
         result = client(DeleteContactRequest(input_user))
         log.debug('{}'.format(result))
         session['error'] = 'Контакт {}_{} успешно удален.'.format(result.user.first_name, result.user.last_name)

@@ -1,4 +1,6 @@
+from time import strftime
 from flask import Flask, jsonify
+from flask import request
 from app.api import telegram
 from app.contacts import contacts
 from app.utils import log
@@ -29,3 +31,17 @@ def help():
         if rule.endpoint != 'static':
             func_list[rule.rule] = app.view_functions[rule.endpoint].__doc__
     return jsonify(func_list)
+
+@app.after_request
+def after_request(response):
+    """ Logging after every request. """
+    # This avoids the duplication of registry in the log,
+    # since that 500 is already logged via @app.errorhandler.
+    log.info('%s %s %s %s %s %s',
+          request.remote_addr,
+          request.method,
+          request.scheme,
+          request.full_path,
+          response.status,
+          response.headers['Content-Length'])
+    return response
