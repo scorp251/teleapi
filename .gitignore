@@ -107,4 +107,3 @@ conf/config.ini
 mainclient.session
 app/contact/static/tmp/*
 message.*
-log/*
