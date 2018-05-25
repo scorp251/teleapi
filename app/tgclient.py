@@ -20,7 +20,7 @@ if config['proxy']['enabled'] == 'True':
     client = TelegramClient('mainclient', api_id, api_hash, proxy=tuple((socks.SOCKS5, proxy_host, int(proxy_port), True, proxy_user, proxy_pass)), update_workers=True, spawn_read_thread=True)
 else:
     log.info('Initializing conection to telegram')
-    client = TelegramClient('mainclient', api_id, api_hash)
+    client = TelegramClient('mainclient', api_id, api_hash, update_workers=True, spawn_read_thread=True)
 
 log.info('Connecting to telegram')
 try:
