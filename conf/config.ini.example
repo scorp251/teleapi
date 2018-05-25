@@ -11,6 +11,11 @@ api_id=
 api_hash=
 test_mode=True
 
+[telegram]
+loglevel=DEBUG
+logfile=/opt/teleapi/log/messages.log
+logconsole=True
+
 [proxy]
 enabled=True
 hostname=i.p.a.d
