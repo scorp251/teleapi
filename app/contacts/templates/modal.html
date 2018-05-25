@@ -8,7 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{ url_for('contact.contact_add') }}" method="POST">
+      <form action="{{ url_for('contacts.contact_add') }}" method="POST">
       <div class="modal-body">
         <div class="form-group">
             <label for="inputFirstName">Имя:</label>
@@ -46,7 +46,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{ url_for('contact.contact_del') }}" method="POST">
+      <form action="{{ url_for('contacts.contact_del') }}" method="POST">
       <div class="modal-body">
         Вы действительно хотите удалить пользователя?
       </div>

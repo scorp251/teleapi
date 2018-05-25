@@ -4,11 +4,8 @@ from telethon.tl.types import UpdateShortMessage, PeerUser
 from telethon.tl.functions.messages import ReadHistoryRequest
 from telethon.tl.functions.users import GetUsersRequest
 from telethon.tl.types import InputUser
-from .config import config
-from utils import logger
-
-log = logger.get_logger()
-msglog = logger.get_msglog()
+from app.utils import log, msglog
+from app.config import config
 
 api_id = config['telethon']['api_id']
 api_hash = config['telethon']['api_hash']
@@ -19,12 +16,18 @@ if config['proxy']['enabled'] == 'True':
     proxy_user = config['proxy']['username']
     proxy_pass = config['proxy']['password']
 
-    log.info('Connect using proxy {}'.format(tuple((socks.SOCKS5, proxy_host, proxy_port, True, proxy_user, proxy_pass))))
+    log.info('Initializing conection to telegram with proxy {}'.format(tuple((socks.SOCKS5, proxy_host, proxy_port, True, proxy_user, proxy_pass))))
     client = TelegramClient('mainclient', api_id, api_hash, proxy=tuple((socks.SOCKS5, proxy_host, int(proxy_port), True, proxy_user, proxy_pass)), update_workers=True, spawn_read_thread=True)
 else:
+    log.info('Initializing conection to telegram')
     client = TelegramClient('mainclient', api_id, api_hash)
 
-client.start()
+log.info('Connecting to telegram')
+try:
+    client.start()
+except Exception as e:
+    log.critical('Failed connect to telegram {}'.format(e))
+    raise SystemExit
 
 def eventHandlerCallback(update):
     msglog.debug('{}'.format(update))

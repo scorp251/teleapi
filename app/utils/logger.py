@@ -1,11 +1,11 @@
 import sys
 import logging
 from logging.handlers import RotatingFileHandler
-from .config import config
+from app.config import config
 
-LOG = logging.getLogger(__name__)
-LOG.setLevel(config['global']['loglevel'])
-LOG.propagate = False
+log = logging.getLogger(__name__)
+log.setLevel(config['global']['loglevel'])
+log.propagate = False
 
 INFO_FORMAT = '[%(asctime)s] [%(process)d] [%(levelname)s] %(message)s'
 DEBUG_FORMAT = '[%(asctime)s] [%(process)d] [%(levelname)s] %(message)s [in %(pathname)s:%(lineno)d]'
@@ -16,10 +16,10 @@ stream_handler.setFormatter(formatter)
 
 file_handler = RotatingFileHandler(config['global']['logfile'], 'a', 1 * 1024 * 1024, 10)
 file_handler.setFormatter(formatter)
-LOG.addHandler(file_handler)
+log.addHandler(file_handler)
 
 if config['global']['logconsole'] == 'True':
-    LOG.addHandler(stream_handler)
+    log.addHandler(stream_handler)
 
 
 tglog = logging.getLogger('telethon')
@@ -39,12 +39,3 @@ file_handler.setFormatter(formatter)
 msglog.addHandler(file_handler)
 if config['telegram']['logconsole'] == 'True':
     msglog.addHandler(stream_handler)
-
-def get_logger():
-    return LOG
-
-def get_tglog():
-    return tglog
-
-def get_msglog():
-    return msglog

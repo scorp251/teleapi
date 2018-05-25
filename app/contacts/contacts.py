@@ -2,12 +2,10 @@ from telethon.tl.functions.contacts import GetContactsRequest, ImportContactsReq
 from telethon.tl.types import InputPhoneContact, InputUser
 from pathlib import Path
 from flask import Blueprint, redirect, render_template, url_for, request, session
-from utils import logger
-from utils.tgclient import client
+from app.utils import log
+from app.tgclient import client
 
-log = logger.get_logger()
-
-bp = Blueprint('contact', __name__, url_prefix='/contact', template_folder='templates', static_folder='static')
+bp = Blueprint('contacts', __name__, url_prefix='/contacts', template_folder='templates', static_folder='static')
 
 @bp.route('/')
 def index():
@@ -32,9 +30,9 @@ def contact_list():
         user_profile['last_name'] = user.last_name
         user_profile['phone'] = user.phone
         if user.photo:
-            filename = 'contact/static/tmp/{}.jpg'.format(user.photo.photo_id)
+            filename = 'app/contacts/static/tmp/{}.jpg'.format(user.photo.photo_id)
             if not Path(filename).is_file():
-                log.debug('Downloading profile photo')
+                log.info('Downloading profile photo to {}'.format(filename))
                 client.download_profile_photo(user, file=filename)
             user_profile['photo'] = '{}.jpg'.format(user.photo.photo_id)
         users.append(user_profile)
@@ -69,7 +67,7 @@ def contact_add():
         log.debug('Contacts not found: {}'.format(input_contact))
         session['error'] = 'Пользователь {} не найден.'.format(phone_number)
 
-    return redirect(url_for('contact.contact_list'))
+    return redirect(url_for('contacts.contact_list'))
 
 @bp.route('/delete', methods=['POST'])
 def contact_del():
@@ -84,4 +82,4 @@ def contact_del():
     except Exception as e:
         session['error'] = 'Ошибка удаления контакта {}'.format(e)
 
-    return redirect(url_for('contact.contact_list'))
+    return redirect(url_for('contacts.contact_list'))
