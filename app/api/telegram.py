@@ -1,4 +1,5 @@
 import base64
+from socks import ProxyConnectionError
 from flask import Blueprint
 from flask import request
 from app.tgclient import client
@@ -27,7 +28,7 @@ def send_message(to, message):
 
 @bp.route('/')
 def index():
-    return GeneralOK('Use /send&to=xxx&message=yyy to send message yyy to xxx')
+    return ErrorGeneralOK('Use /send&to=xxx&message=yyy to send message yyy to xxx')
 
 @bp.route('/send', methods=['GET', 'POST'])
 def send():
@@ -75,3 +76,28 @@ def send_json():
         message = base64.b64decode(message).decode('utf-8')
 
     return send_message(to, message)
+
+@bp.route('/ping', methods=['GET', 'POST'])
+def ping():
+    try:
+        user = client.get_me()
+        log.debug('{}'.format(user))
+
+    except Exception as e:
+        log.error('{}'.format(e))
+        log.error('Trying to reconnect telegram')
+
+        try:
+            client.connect()
+        except Exception as e:
+            log.error('Reconnect failed: {}'.format(e))
+            return ErrorInternalError('{}'.format(e))
+
+        try:
+            user = client.get_me()
+            log.debug('Reconnect successed: {}'.format(user))
+            client.is_connected()
+        except Exception as e:
+            return ErrorInternalError('{}'.format(e))
+
+    return ErrorGeneralOK('{}'.format('Pong'))

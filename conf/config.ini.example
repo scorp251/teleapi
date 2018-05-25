@@ -1,11 +1,11 @@
 [global]
 loglevel=DEBUG
-logfile=/opt/teleapi/log/main.log
+logfile=log/main.log
 logconsole=True
 
 [telethon]
 loglevel=DEBUG
-logfile=/opt/teleapi/log/telethon.log
+logfile=log/telethon.log
 logconsole=False
 api_id=
 api_hash=
@@ -13,7 +13,7 @@ test_mode=True
 
 [telegram]
 loglevel=DEBUG
-logfile=/opt/teleapi/log/messages.log
+logfile=log/messages.log
 logconsole=True
 
 [proxy]

@@ -23,6 +23,7 @@ else:
     client = TelegramClient('mainclient', api_id, api_hash, update_workers=True, spawn_read_thread=True)
 
 log.info('Connecting to telegram')
+
 try:
     client.start()
 except Exception as e:

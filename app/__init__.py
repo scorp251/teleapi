@@ -1,6 +1,5 @@
 from time import strftime
-from flask import Flask, jsonify
-from flask import request
+from flask import Flask, jsonify, request, redirect, url_for
 from app.api import telegram
 from app.contacts import contacts
 from app.utils import log
@@ -21,7 +20,7 @@ log.info('Application started')
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World!"
+    return redirect(url_for('contacts.contact_list'), code=301)
 
 @app.route('/help', methods = ['GET'])
 def help():
