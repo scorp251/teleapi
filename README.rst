@@ -50,7 +50,8 @@ Configure NGINX
         listen 0.0.0.0:80;
 
         location / {
-            proxy_pass http://127.0.0.1:5000;
+            proxy_pass              http://127.0.0.1:5000;
+            proxy_read_timeout      30;
         }
 
         location /contacts/static {
