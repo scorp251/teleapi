@@ -36,7 +36,17 @@ Getting Started
 ---------------
 
 Copy file config.ini.sample to config.ini and fill requiered fields
-From main directory run 
+First run:
+
+.. code-block:: shell
+
+    cd /opt/teleapi
+    .venv/bin/flask run
+
+In console it will ask you phone number and security code
+
+
+For normal execution run from main directory
 
 .. code:: shell
 
@@ -58,6 +68,17 @@ Configure NGINX
             root /opt/teleapi/app;
        }
     }
+
+Better run with supervisord
+
+.. code-block: ini
+
+    [program:teleapi]
+    directory=/opt/teleapi
+    command=/opt/teleapi/.venv/bin/gunicorn -b 127.0.0.1:5000 app:app
+    stdout_logfile=/var/log/supervisor-teleapi.log
+    stderr_logfile=/var/log/supervisor-teleapi.log
+    autorestart=true
 
 Usage
 ---------------
