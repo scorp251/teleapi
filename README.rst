@@ -62,7 +62,7 @@ Configure NGINX
 
         location / {
             proxy_pass              http://127.0.0.1:5000;
-            proxy_read_timeout      30;
+            proxy_read_timeout      10;
         }
 
         location /contacts/static {
