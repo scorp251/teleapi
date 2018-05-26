@@ -70,9 +70,15 @@ Configure NGINX
        }
     }
 
-Better run with supervisord
+Better run from supervisord
 
-.. code-block: shell
+.. code-block:: ini
+
+    [supervisorctl]
+
+    [supervisord]
+    logfile=/var/log/supervisord.log
+    user=root
 
     [program:teleapi]
     directory=/opt/teleapi
