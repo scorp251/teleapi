@@ -36,6 +36,7 @@ Getting Started
 ---------------
 
 Copy file config.ini.sample to config.ini and fill requiered fields
+
 First run:
 
 .. code-block:: shell
@@ -71,7 +72,7 @@ Configure NGINX
 
 Better run with supervisord
 
-.. code-block: ini
+.. code-block: shell
 
     [program:teleapi]
     directory=/opt/teleapi
@@ -79,6 +80,7 @@ Better run with supervisord
     stdout_logfile=/var/log/supervisor-teleapi.log
     stderr_logfile=/var/log/supervisor-teleapi.log
     autorestart=true
+
 
 Usage
 ---------------
