@@ -14,7 +14,7 @@ def ErrorBadRequest(message=''):
         'title': 'Bad Request',
         'message': message
     }
-    return jsonify(status), 405
+    return jsonify(status), 400
 
 def ErrorMethodNotAllowed(message=''):
     status = {
