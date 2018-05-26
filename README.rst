@@ -107,6 +107,14 @@ Note! File may be base64 encoded
 
 To send JSON
 
-.. code:: shell
+.. code-block:: shell
 
-     curl -H 'Content-Type: application/json' -XPOST -d '{ "to": "<phone number>", "message": "Hello world"}' 'http://<your server ip>/api/telegram/sendJSON'
+    curl -H 'Content-Type: application/json' -XPOST -d '{ "to": "<phone number>", "message": "Hello world"}' 'http://<your server ip>/api/telegram/sendJSON'
+    curl -XPOST -d @/path/to/file.json 'http://<your server ip>/api/telegram/sendJSON'
+
+To check server status and telegram avaliability
+
+.. code-block:: shell
+
+    curl http://<your server ip>/api/telegram/ping
+    {"code":200,"message":"Pong","title":"OK"}
